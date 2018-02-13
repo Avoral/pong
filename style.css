@@ -1,0 +1,9 @@
+#CanvasID{
+  background-color: #f0f0f0;
+  margin: 0 auto;
+  display: block;
+}
+.green{
+  color: green;
+  background: -webkit-radial-gradient(center, ellipse cover, #b5bdc8 0%,#828c95 36%,#28343b 100%);
+}
