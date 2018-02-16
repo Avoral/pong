@@ -11,27 +11,27 @@ let ballRadius = 10;
 //paddle
 let paddleHeight = 10;
 let paddleWidth = 80;
-let rightPress = false;
-let leftPress = false;
+let rightPressed = false;
+let leftPressed = false;
 let paddleX = (canvas.width - paddleWidth)/2;
 document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup',keyUpHandler, false);
 
 function keyDownHandler(e){
   if(e.keyCode == 39){
-    rightPress = true;
+    rightPressed = true;
   }
   if(e.keyCode == 37){
-    leftPress = true;
+    leftPressed = true;
   }
 }
 
 function keyUpHandler(e){
   if(e.keyCode == 39){
-    rightPress = false;
+    rightPressed = false;
   }
   if(e.keyCode == 37){
-    leftPress = false;
+    leftPressed = false;
   }
 }
 
@@ -41,10 +41,10 @@ function draw(){
 
   drawBall();
   drawPaddle();
-  if(rightPress) {
+  if(rightPressed && paddleX < canvas.width-paddleWidth) {
       paddleX += 7;
   }
-  else if(leftPress) {
+  else if(leftPressed && paddleX > 0) {
       paddleX -= 7;
   }
 }
@@ -59,15 +59,20 @@ function drawBall(){
   y += dy;
 
   //wall Detection
-  //Top Bottom
-  if(y + dy < ballRadius || y + dy + ballRadius > canvas.height){
+  //Top Bottom (Game Over)
+  if(y + dy < ballRadius){
     dy = -dy
+  } else if(y + dy + ballRadius > canvas.height){
+    gameOver();
   }
+  //Paddle Detection
+
 
   //Left right
   if(x + dx < ballRadius || x + dx + ballRadius > canvas.width){
     dx = -dx
   }
+
 }
 
 function drawPaddle(){
@@ -76,10 +81,11 @@ function drawPaddle(){
   ctx.fillStyle = '#009900';
   ctx.fill();
   ctx.closePath();
+}
 
-//wall Detection
-//Left right
-
+function gameOver(){
+  ctx.font = "30px Arial";
+  ctx.fillText("Game Over", 80 , canvas.width/2);
 }
 
 window.setInterval(draw, 10);
