@@ -61,12 +61,14 @@ function drawBall(){
   //wall Detection
   //Top Bottom (Game Over)
   if(y + dy < ballRadius){
-    dy = -dy
+    dy = -dy;
   } else if(y + dy + ballRadius > canvas.height){
     gameOver();
   }
   //Paddle Detection
-
+  if(y > canvas.height-paddleHeight-ballRadius && x < paddleX+paddleWidth && x > paddleX){
+    dy = -dy;
+  }
 
   //Left right
   if(x + dx < ballRadius || x + dx + ballRadius > canvas.width){
